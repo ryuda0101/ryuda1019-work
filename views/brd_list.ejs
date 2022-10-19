@@ -16,25 +16,33 @@
     <div id="brd_list_container">
         <div class="center">
             <div class="top_menu">
-                <h3>고객센터</h3>
-                <ul>
-                   <li><a href="#">공지사항</a></li> 
-                   <li><a href="#">문의하기</a></li> 
-                </ul>
+                <div class="custom_center">
+                    <h3>고객센터</h3>
+                    <ul>
+                       <li>
+                            <a href="#">공지사항</a>
+                            <span class="notice"></span> 
+                        </li>
+                       <li>
+                            <a href="#">문의하기</a>
+                            <span class="qna"></span>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <table>
+            <table class="brd_top">
                 <tr class="brd_top">
-                    <th>제목</th>
-                    <th>등록일자</th>
+                    <th class="title">제목</th>
+                    <th class="date">등록일자</th>
                 </tr>
                 <!-- 반복문으로 데이터 받아와서 여기에 넣어주기 -->
                 <tr class="brd_bot">
-                    <th></th>
-                    <th></th>
+                    <th class="title"></th>
+                    <th class="date"></th>
                 </tr>
             </table>
             <div class="search_menu">
-                <select name="" id="">
+                <select name="search_menu" id="search_menu">
                     <option value="brdtitle">제목</option>
                     <option value="brdcontext">내용</option>
                 </select>

@@ -67,6 +67,16 @@ app.get("/brdlist",function(req,res){
     res.render("brd_list");
 });
 
+// 게시글 상세 페이지 get 경로로 요청하기
+app.get("/brddetail",function(req,res){
+    res.render("brd_detail");
+});
+
+// 게시글 작성 페이지 get 경로로 요청하기
+app.get("/brdinsert",function(req,res){
+    res.render("brd_insert");
+});
+
 // html과 같은 정적인 파일 보낼때는 app.get.sendFile(__dirname + "/불러들일 html파일 경로")
 // ejs와 같은 동적인 파일 보낼때는 app.get.render("불러들일 ejs파일")
 // 특정 주소로 이동해달라고 요청할때는 res.redirect("/이동할 경로")

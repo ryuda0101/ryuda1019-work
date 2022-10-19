@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>공지사항 작성</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 헤더영역 -->
+    <%- include("common/header.ejs") %>
+    <!-- 배너영역 -->
+    <%- include("common/banner.ejs") %>
+    <div id="brdinsert_container">
+        <div class="center">
+            <h2>공지사항 작성</h2>
+            <form id="brdinsert_form" action="" method="post">
+                <label for="brdtitle">제목</label>
+                <input type="text" name="brdtitle" id="brdtitle">
+                <label for="brdcontext">내용</label>
+                <textarea name="brdcontext" id="brdcontext"></textarea>
+                <div class="btns">
+                    <button class="insertBtn" type="submit">작성하기</button>
+                    <!-- 스크립트에서 클릭시 location.href = "" 해주기 -->
+                    <button class="cancelBtn" type="button">작성취소</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <%- include("common/footer.ejs") %>
+</body>
+</html>

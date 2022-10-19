@@ -123,7 +123,7 @@ h2 {
 }
 
 .main_banner {
-  background-image: url(../img/bg5.png);
+  background-image: url(../img/bg1.png);
 }
 
 #main_container {
@@ -224,4 +224,196 @@ h2 {
   line-height: 40px;
   color: #fff;
   font-weight: normal;
+}
+
+#brd_list_container {
+  display: flex;
+  justify-content: center;
+}
+#brd_list_container .center {
+  background-color: #fff;
+}
+#brd_list_container .center .top_menu {
+  position: absolute;
+  top: 575px;
+  background-color: #fff;
+  width: 1200px;
+  height: 125px;
+  display: flex;
+  justify-content: center;
+}
+#brd_list_container .center .top_menu .custom_center {
+  width: 90%;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#brd_list_container .center .top_menu .custom_center h3::before {
+  content: "";
+  display: block;
+  margin-bottom: 15px;
+  width: 40px;
+  height: 3px;
+  background-color: #3d9dff;
+}
+#brd_list_container .center .top_menu .custom_center ul {
+  width: 88%;
+  display: flex;
+  justify-content: center;
+}
+#brd_list_container .center .top_menu .custom_center ul li {
+  margin: 0 30px;
+}
+#brd_list_container .center .top_menu .custom_center ul li a {
+  text-align: center;
+  display: block;
+}
+#brd_list_container .center .top_menu .custom_center ul li span {
+  display: block;
+  width: 63px;
+  height: 2px;
+  background-color: #000;
+  position: relative;
+  top: 56px;
+}
+#brd_list_container .center table {
+  margin: 240px 0 120px 0;
+  width: 100%;
+}
+#brd_list_container .center table tr {
+  line-height: 70px;
+}
+#brd_list_container .center table tr .title {
+  width: 70%;
+}
+#brd_list_container .center table tr .date {
+  width: 30%;
+}
+#brd_list_container .center table .brd_top {
+  border-top: 2px solid #000;
+  border-bottom: 1px solid #000;
+}
+#brd_list_container .center table .brd_bot {
+  border-bottom: 1px solid #e2e2e2;
+}
+#brd_list_container .center .search_menu {
+  margin-bottom: 120px;
+}
+#brd_list_container .center .search_menu select {
+  border: 1px solid #e2e2e2;
+  width: 85px;
+  height: 40px;
+  border-radius: 3px;
+}
+#brd_list_container .center .search_menu #searchInput {
+  border: 1px solid #e2e2e2;
+  width: 237px;
+  height: 40px;
+  border-radius: 3px;
+}
+#brd_list_container .center .search_menu button {
+  width: 48px;
+  height: 40px;
+  border-radius: 3px;
+}
+
+#brd_list_container .center .mid {
+  margin: 130px 0 70px;
+}
+#brd_list_container .center .mid h2 {
+  text-align: center;
+  font-size: 50px;
+  margin: auto 0;
+}
+#brd_list_container .center .brd_detail {
+  margin: 0 0 30px 0;
+}
+#brd_list_container .center .brd_detail tr th {
+  text-align: left;
+  border-bottom: 1px solid #e2e2e2;
+}
+#brd_list_container .center .brd_detail tr .left_th {
+  width: 15%;
+  text-align: center;
+}
+#brd_list_container .center .brd_detail tr .right_th {
+  width: 85%;
+}
+#brd_list_container .center .brd_detail .brd_context {
+  border-bottom: 1px solid #e2e2e2;
+  height: 500px;
+  position: relative;
+}
+#brd_list_container .center .brd_detail .brd_context .context {
+  border-bottom: none;
+  position: absolute;
+  top: 25px;
+  left: 20px;
+  line-height: 1;
+}
+#brd_list_container .center .brd_detail .top_line {
+  border-top: 1px solid #000;
+}
+#brd_list_container .center .listBtn {
+  display: block;
+  width: 80px;
+  height: 40px;
+  background-color: #adb5bd;
+  border-radius: 3px;
+  color: #fff;
+  text-align: center;
+  line-height: 40px;
+  margin-bottom: 240px;
+}
+
+#brdinsert_container {
+  display: flex;
+  justify-content: center;
+}
+#brdinsert_container .center h2 {
+  text-align: center;
+  font-size: 50px;
+  margin: 120px 0;
+}
+#brdinsert_container .center #brdinsert_form {
+  width: 650px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+#brdinsert_container .center #brdinsert_form label {
+  line-height: 30px;
+  font-weight: bold;
+}
+#brdinsert_container .center #brdinsert_form input {
+  background-color: #f8f9fa;
+  width: 100%;
+  height: 45px;
+  margin-bottom: 20px;
+}
+#brdinsert_container .center #brdinsert_form textarea {
+  background-color: #f8f9fa;
+  resize: none;
+  width: 100%;
+  height: 140px;
+  margin-bottom: 80px;
+}
+#brdinsert_container .center #brdinsert_form .btns {
+  display: flex;
+  justify-content: space-between;
+}
+#brdinsert_container .center #brdinsert_form .btns .insertBtn {
+  background-color: #0c6cd0;
+}
+#brdinsert_container .center #brdinsert_form .btns .cancelBtn {
+  background-color: #adb5bd;
+}
+#brdinsert_container .center #brdinsert_form button {
+  width: 49%;
+  height: 70px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 200px;
 }

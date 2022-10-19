@@ -16,9 +16,10 @@ h2 {
 #header {
     display:flex; justify-content:center;
     background-color:rgba(0,0,0,0.7);
-    position:absolute; width:100%; padding:10px 0;
+    position:absolute; width:100%;
     .center {
         display:flex; justify-content:space-between;
+        position:relative;
         .logo {}
         .gnb {
             width:58.333333%;
@@ -30,9 +31,10 @@ h2 {
                 }
                 .sub_gnb {
                     // 스크립트에서 드롭다운 메뉴 높이값 조정해줄것!
+                    transition:all 0.5s;
+                    overflow:hidden;
                     height:0;
-                    display:none;
-                    position:absolute; bottom:-5px;
+                    position:absolute;
                     background:#0f1116;
                     text-align:center;
                     z-index:99;

@@ -27,5 +27,19 @@
             </li>
             <li><a href="/brdinsert">쇼핑몰</a></li>
         </ul>
+        <script>
+            // 변수 세팅
+            const gnbMenu = document.querySelectorAll("#header .center .gnb > li");
+            const subGnbMenu = document.querySelector("#header .center .gnb .sub_gnb");
+
+            gnbMenu.forEach(function(el,index){
+                el.addEventListener("mouseenter",function(){
+                    el.querySelector(".sub_gnb").style.height = "100px"
+                });
+                el.addEventListener("mouseleave",function(){
+                    el.querySelector(".sub_gnb").style.height = "0"
+                });
+            });
+        </script>
     </div>
 </div>

@@ -69,11 +69,11 @@ h2 {
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
   width: 100%;
-  padding: 10px 0;
 }
 #header .center {
   display: flex;
   justify-content: space-between;
+  position: relative;
 }
 #header .center .gnb {
   width: 58.333333%;
@@ -89,10 +89,10 @@ h2 {
   font-size: 20px;
 }
 #header .center .gnb > li .sub_gnb {
+  transition: all 0.5s;
+  overflow: hidden;
   height: 0;
-  display: none;
   position: absolute;
-  bottom: -5px;
   background: #0f1116;
   text-align: center;
   z-index: 99;

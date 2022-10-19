@@ -1,0 +1,148 @@
+// 겹치는 코드
+.center {
+    width:1200px;
+}
+h2 {
+    font-size:60px; line-height:85px;
+}
+.logo {
+    width:150px;
+    img {width:100%;}
+}
+
+.body {overflow:hidden;}
+
+// 헤더영역 작업 시작
+#header {
+    display:flex; justify-content:center;
+    background-color:rgba(0,0,0,0.7);
+    position:absolute; width:100%; padding:10px 0;
+    .center {
+        display:flex; justify-content:space-between;
+        .logo {}
+        .gnb {
+            width:58.333333%;
+            display:flex; justify-content:space-between; align-items:center;
+            > li {
+                line-height:100px;
+                > a {
+                    color:#fff; font-size:20px;
+                }
+                .sub_gnb {
+                    // 스크립트에서 드롭다운 메뉴 높이값 조정해줄것!
+                    height:0;
+                    display:none;
+                    position:absolute; bottom:-5px;
+                    background:#0f1116;
+                    text-align:center;
+                    z-index:99;
+                    > li {
+                        line-height:1;
+                        > a {
+                            color:#fff; display:block; font-size:16px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// 배너영역 작업 시작
+.banner {
+    background-image:url(../img/bg2.png); background-repeat:no-repeat; background-size:cover;
+    height:700px; display:flex;
+    .center {
+        display:flex; justify-content:center; align-items:center;
+        h2 {
+            color:#fff;
+        }
+    }
+}
+
+.main_banner {
+    background-image:url(../img/bg5.png);
+}
+
+// 메인페이지 중간영역 작업 시작
+#main_container {
+    display:flex; justify-content:center;
+    padding:120px 0;
+    .center {
+        display:flex; justify-content:space-between; align-items:center;
+        img {
+            width:700px;
+        }
+        h2 {
+            font-size:45px;
+            line-height:60px;
+            span {color:#3d9dff;}
+            .bold {font-weight:bold;}
+            .thin {font-weight:normal;}
+        }
+    }
+}
+
+// 풋터영역 작업 시작
+#footer {
+    background-image:url(../img/footbg1.png);
+    display:flex; justify-content:center;
+    padding:150px 0;
+    overflow:hidden;
+    .center { 
+        h2 {
+            color:#fff;
+            text-align:left;
+        }
+        .footer_gnb {
+            width:100%; padding:100px 0;
+            display:flex; justify-content:space-between;
+            > li {
+                &::before {
+                    content:""; display:inline-block; 
+                    width:1px; height:175px; background-color:#4f4f4f;
+                    position:absolute;
+                    transform:translate(-100px,20px);
+                }
+                line-height:100px;
+                > a {
+                    color:#fff; font-size:20px;
+                }
+                .sub_gnb {
+                    text-align:center;
+                    z-index:99;
+                    > li {
+                        line-height:30px;
+                        > a {
+                            color:#fff; display:block; font-size:16px;
+                        }
+                    }
+                }
+            }
+            .lastLi {
+                &::after {
+                    content:""; display:inline-block;
+                    width:1px; height:175px; background-color:#4f4f4f;
+                    position:absolute;
+                    transform:translate(100px,20px);
+                }
+            }
+        }
+        .address {
+            display:flex; border-bottom:1px solid #fff;
+            line-height:40px;
+            p {
+                color:#fff; margin-right:60px;
+                span {
+                    font-weight:bold;
+                    margin-right:10px;
+                }
+            }
+        }
+        h3 {
+            line-height:40px;
+            color:#fff;
+            font-weight:normal;
+        }
+    }
+}

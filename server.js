@@ -59,163 +59,175 @@ MongoClient.connect("mongodb+srv://admin:qwer1234@testdb.g2xxxrk.mongodb.net/?re
 
 // 메인페이지 get 경로로 요청하기
 app.get("/",function(req,res){
-    res.render("index");
+    res.render("index",{userData:req.user});
 });
 
-// 게시판 목록 페이지 get 경로로 요청하기
-app.get("/brdlist",function(req,res){
-    res.render("brd_list");
-});
-
-// 게시글 상세 페이지 get 경로로 요청하기
-app.get("/brddetail",function(req,res){
-    res.render("brd_detail");
-});
-
-// 게시글 작성 페이지 get 경로로 요청하기
+// 게시글 작성 페이지 get 방식으로 요청하기
 app.get("/brdinsert",function(req,res){
-    res.render("brd_insert");
+    res.render("brd_insert",{userData:req.user});
 });
 
-// 로그인 페이지 get 경로로 요청하기
-app.get("/login",function(req,res){
-    res.render("login");
+// 작성한 게시글 db에 업로드하기
+app.post("/insert",function(req,res){
+    db.collection("ex10_count").findOne({name:"게시판"},function(err,result){
+        db.collection("ex10_board").insertOne({
+            brdid:result.totalBoard + 1,
+            brdtitle:req.body.brdtitle,
+            brdcontext:req.body.brdcontext,
+            brdauther:req.user.joinnick,
+            brddate:moment().format("YYYY-MM-DD HH:mm") 
+        },function(err,result){
+            db.collection("ex10_count").updateOne({name:"게시판"},{$inc:{totalBoard:1}},function(err,result){
+                res.redirect("/brdlist")
+            })
+        });
+    });
 });
 
-// 회원가입 페이지 get 경로로 요청하기
+// 게시판 목록 페이지 get 방식으로 요청하기
+app.get("/brdlist",function(req,res){
+    db.collection("ex10_board").find().toArray(function(err,result){
+        res.render("brd_list",{userData:req.user, brdinfo:result});
+    });
+});
+
+// 게시글 상세 페이지 get 방식으로 요청하기
+app.get("/brddetail/:no",function(req,res){
+    db.collection("ex10_board").findOne({brdid:Number(req.params.no)},function(err,result){
+        res.render("brd_detail",{userData:req.user, brdinfo:result});
+    });
+});
+
+// 게시글 수정 페이지 get 방식으로 요청
+app.get("/brdedit/:no",function(req,res){
+    db.collection("ex10_board").findOne({brdid:Number(req.params.no)},function(err,result){
+        res.render("brd_edit.ejs", {userData:req.user, brdinfo:result})
+    });
+});
+
+
+// 게시글 수정 페이지에서 글 수정후 db에 새로 업데이트
+app.post("/update",function(req,res){
+    db.collection("ex10_board").updateOne({brdid:Number(req.body.id)},{$set:{
+        brdtitle:req.body.brdtitle,
+        brdcontext:req.body.brdcontext
+    }},function(err,result){
+        res.redirect("/brddetail/" + Number(req.body.id));
+    });
+});
+
+// 게시글 삭제 처리 get 방식으로 요청
+app.get ("/delete/:no",function(req,res){
+    db.collection("ex10_board").deleteOne({brdid:Number(req.params.no)},function(err,result){
+        res.redirect("/brdlist")
+    })
+});
+
+// 검색기능 추가하기
+app.get("/search",function(req,res){
+    let search = [
+                    {
+                        '$search': {
+                            'index': 'ex10_board',
+                            'text': {
+                                query: req.query.searchInput,
+                                path: req.query.search_menu
+                            }
+                        }
+                    },{
+                        $sort:{brdid:-1}
+                    }
+                ]
+    db.collection("ex10_board").aggregate(search).toArray(function(err,result){
+        res.render("brd_list",{brdinfo:result,userData:req.user});
+    });
+});
+
+
+
+
+// 회원가입 페이지 get 방식으로 요청하기
 app.get("/join",function(req,res){
     res.render("join");
 });
 
-// html과 같은 정적인 파일 보낼때는 app.get.sendFile(__dirname + "/불러들일 html파일 경로")
-// ejs와 같은 동적인 파일 보낼때는 app.get.render("불러들일 ejs파일")
-// 특정 주소로 이동해달라고 요청할때는 res.redirect("/이동할 경로")
+// 회원가입 페이지 post로 db에 데이터 올리기
+app.post("/userJoin",function(req,res){
+    db.collection("ex10_join").findOne({joinid:req.body.joinid},function(err,result){
+        if (result){
+            res.send("<script> alert('이미 가입된 아이디 입니다.'); location.href = '/login' </script>")
+        }
+        else {
+            db.collection("ex10_count").findOne({name:"회원정보"},function(err,result){
+                db.collection("ex10_join").insertOne({
+                    joinno:result.joinCount + 1,
+                    joinid:req.body.joinid,
+                    joinpass:req.body.joinpass,
+                    joinnick:req.body.joinname,
+                    joinemail:req.body.joinemail
+                },function(err,result){
+                    db.collection("ex10_count").updateOne({name:"회원정보"},{$inc:{joinCount:1}},function(err,result){
+                        res.send("<script> alert('회원가입을 축하드립니다.'); location.href = '/' </script>")
+                    });
+                });
+            });
+        }
+    });
+});
 
+// 로그인 페이지 get 방식으로 요청하기
+app.get("/login",function(req,res){
+    res.render("login");
+});
 
-// get요청으로 join.ejs 화면 응답받기
-// ex.
-// app.get("/호스트8080 뒤에 붙을 주소 이름",function(req,res){
-//     res.render("응답받을 ejs파일 이름");
-// });
-
-// post요청으로 join.ejs에서 입력한 value값 콜렉션에 넣어주기
-// ex.
-// app.post("/폼태그에서 입력한 action의 경로",function(req,res){
-//     // 입력한 데이터값 요청받은거는 form 태그에서 name 속성값 이름지정필수
-//     // 데이터베이스에 값 저장하는 방법 db.collection("altas 사이트에서 본인이 생성한 콜렉션 이름 집어넣기").insertOne()
-//     db.collection("데이터베이스의 컬렉션 이름").insertOne({
-//         // ↓ 여러개의 객체로 데이터를 보내준다.
-//         // ex. 프로퍼티명: 추가할 데이터값
-//         userId:req.body.userId,      ←   컬렉션에 넣을때 넣어줄 이름:req.body.input에서 입력한 name값
-//         userpass:req.body.pass,
-//         userPassCheck:req.body.passCh
-//         // ↓ 전달받은 데이터를 받아서 실행할 코드. / ↓ 여기에 페이지 이동하는 기능이 들어간다.
-//     },function(err,result){
-//         // 에러가 발생했을 경우 메세지 출력 (선택사항임. 안쓴다고 해서 문제가 되지는 않는다.)
-//         if (err) {return console.log(err);}
-//         res.send("가입이 완료되었습니다.");      ←   결과 화면에 출력될것
-//     });
-//     데이터 값을 가져와서 화면에 보여주고자 할 때
-//     db.collection("joinTest").find().toArray(function(err,result){
-//         res.render("welcome.ejs",{useritem:result});
-//     })
-// });
-
-
-// 게시판 만들고 게시글 번호 부여하기
-// 1. 데이터베이스에서 컬렉션을 2개 만든다.
-//      하나는 데이터를 담을 컬렉션 / 하나는 데이터의 갯수를 담아줄 컬렉션
-// 2. ejs를 3개 만들어준다.
-//      하나는 데이터를 작성할 페이지 / 하나는 데이터를 수정할 페이지 / 하나는 데이터를 보여줄 페이지
-// 3. db에서 데이터의 갯수를 담아줄 컬렉션에 insert document로 ObjectId를 string에서 Int32 또는 Int64로 바꿔주고 totalCount값을 만들고 그 안에 0을 담아준다. 또한 name으로 개시물갯수라는 객체를 추가로 만들어준다. 
-// 4. db 컬렉션에서 findOne으로 갯수를 담아줄 컬렉션을 찾아서 가져온다.
-// 5. app.post작업으로 데이터를 작성할 페이지.ejs에서 입력한 값을 객체형식으로 db의 컬렉션에 받아준다.
-// 6. 데이터를 보여줄 페이지.ejs에서 db의 컬렉션에 담긴 값을 가져와서 화면에 보여준다.
-
-
-// 데이터 수정하기
-// 1. 기존의컬렉션의 데이터값을 가져와서 데이터를 수정할 페이지.ejs에 넣어준다.  
-// 2. 데이터를 수정할 페이지.ejs에서 가져온 기존의 값을 컬렉션에.update({변경될 값의 페이지 넘버 찾기},{$set:{변경될 값}},function(req,res){})해서 수정해준다.
-// 3. 수정해준 값이 화면에 보여지는지 확인한다.
-// ex. 
-// app.post("/update",function(req,res){
-//     // 해당 게시글 번호에 맞는 게시글 수정 처리
-//     db.collection("ex10_board").updateOne({brdid:Number(req.body.no)},{$set:{
-//         brdtitle:req.body.title,
-//         brdcontext:req.body.context
-//     }},function(req,res){
-//     // 해당 게시글 상세 화면 페이지로 이동
-//     res.redirect("/detail/" + req.body.no);
-//     });
-// });
-
-
-// // 로그인 기능 수행 작업
-// // 로그인 화면으로 요청
-// app.get("/login",function(req,res){
-//     res.render("login");
-// });
-
-// // 로그인 페이지에서 입력한 아이디, 비밀번호 검증처리 요청
-// // app.post("/경로",여기 사이에 ↓ 입력,function(req,res){});
-// // passport.authenticate('local', {failureRedirect : '/fail'})
-// app.post("/loginresult",passport.authenticate('local', {failureRedirect : '/fail'}),function(req,res){
-//     //                                                   ↑ 실패시 위의 경로로 요청
-//     // ↓ 로그인 성공시 메인페이지로 이동
-//     res.redirect("/")
-// });
+// 로그인시 입력한 아이디, 비밀번호 검증 처리
+app.post("/loginresult",passport.authenticate('local', {failureRedirect : '/fail'}),function(req,res){
+    //                                                   ↑ 실패시 위의 경로로 요청
+    // ↓ 로그인 성공시 메인페이지로 이동
+    res.redirect("/")
+});
 
 // /loginresult 경로 요청시 passport.autenticate() 함수 구간이 아이디, 비밀번호 로그인 검증 구간
-// passport.use(new LocalStrategy({
-//     usernameField: 'id',    // login.ejs에서 입력한 아이디의 name값
-//     passwordField: 'pw',    // login.ejs에서 입력한 비밀번호의 name값
-//     session: true,      // 세션을 이용할것인지에 대한 여부
-//     passReqToCallback: false,   // 아이디와 비밀번호 말고도 다른 항목들을 더 검사할것인가에 대한 여부
-//   }, function (입력한아이디작명, 입력한비번작명, done) {
-//     //console.log(입력한아이디, 입력한비번);
-//     db.collection('아이디, 비밀번호가 들어있는 컬렉션 이름').findOne({ 컬렉션에서 아이디가 들어있는 데이터 이름: 위에서작명한입력한아이디 }, function (에러, 결과) {
-//       if (에러) return done(에러)
-// // 아래의 message는 필요에 따라 뻴수도 있다. 
-//       if (!결과) return done(null, false, { message: '존재하지않는 아이디요' })
-//       if (위에서작명한입력한비번 == 결과.컬렉션에서 비밀번호가 들어있는 데이터 이름) {
-//         return done(null, 결과)
-//       } else {
-//         return done(null, false, { message: '비번틀렸어요' })
-//       }
-//     })
-// }));
+passport.use(new LocalStrategy({
+    usernameField: 'userid',    // login.ejs에서 입력한 아이디의 name값
+    passwordField: 'userpass',    // login.ejs에서 입력한 비밀번호의 name값
+    session: true,      // 세션을 이용할것인지에 대한 여부
+    passReqToCallback: false,   // 아이디와 비밀번호 말고도 다른 항목들을 더 검사할것인가에 대한 여부
+  }, function (userid, userpass, done) {
+    //console.log(입력한아이디, 입력한비번);
+    db.collection('ex10_join').findOne({joinid:userid }, function(err,result) {
+      if (err) return done(err)
+// 아래의 message는 필요에 따라 뻴수도 있다. 
+      if (!result) return done(null, false, { message: '존재하지않는 아이디 입니다.' })
+      if (userpass == result.joinpass) {
+        return done(null, result)
+      } else {
+        return done(null, false, { message: '비밀번호를 다시한번 확인해 주세요.' })
+      }
+    })
+}));
 
-// // 최초의 로그인시 한번 실행
-// // serializeUser    →   처음 로그인 했을 시 해당 사용자의 아이디를 기반으로 세션을 생성함
-// // ↓ 여기서 생성된 매게변수 user로 req.user~~를 쓸 수 있다.
-// passport.serializeUser(function (user, done) {
-//      // ↓ 서버에는 세션을 만들고 / 사용자 웹 브라우저에는 쿠키를 만들어준다. 
-//     done(null, user.컬렉션에서 아이디가 들어있는 데이터 이름)
-// });
+// 최초의 로그인시 한번 실행
+// ↓ 여기서 생성된 매게변수 user로 req.user~~를 쓸 수 있다.
+passport.serializeUser(function (user, done) {
+     // ↓ 서버에는 세션을 만들고 / 사용자 웹 브라우저에는 쿠키를 만들어준다. 
+    done(null, user.joinid)
+});
 
-// // 로그인 할 때마다 실행
-// // deserializeUser  →   로그인을 한 후 다른 페이지들을 접근할 시 생성된 세션에 담겨있는 회원정보 데이터를 보내주는 처리
-// passport.deserializeUser(function (입력한아이디작명, done) {
-//     db.collection("ex9_join").findOne({컬렉션에서 아이디가 들어있는 데이터 이름:위에서 입력한아이디작명},function(err,result){
-//         done(null,result)
-//     });
-// });
+// 로그인 할 때마다 실행
+passport.deserializeUser(function (userid, done) {
+    db.collection("ex10_join").findOne({joinid:userid }, function(err,result){
+        done(null,result)
+    });
+});
 
-// // 로그아웃 기능 작업
-// app.get("/logout",function(req,res){
-//     // 서버의 세션을 삭제하고, 본인 웹브라우저의 쿠키를 삭제한다.
-//     req.session.destroy(function(err,result){
-//         // 지워줄 쿠키를 선택한다. / 콘솔 로그의 application → cookies에 가면 name에서 확인할 수 있다.
-//         res.clearCookie("어떤 쿠키를 지워줄 것인가 선택")
-//         // 로그아웃 후 다시 메인페이지로 돌아가기
-//         res.redirect("/");
-//     });
-// });
-
-// 로그인 했는지 않했는지 확인하는 작업
-// app.get("/list",function(req,res){
-// /list 경로를 입력하면 ↓ 아래의 ejs가 출력되고, 동시에 userData에 로그인 정보를 담아서 보내준다.
-// passport.serializeUser(function (user, done){}에서 써준 코드인 user를 써서 그 안에 담긴 데이터를 가져온다.
-// 즉, req.user는 로그인 했을 때 담긴 아이디, 비밀번호, 메일주소, 전화번호의 데이터를 말한다.
-//     res.render("brd_list",{userData:req.user});
-// })
+// 로그아웃 기능 작업
+app.get("/logout",function(req,res){
+    // 서버의 세션을 삭제하고, 본인 웹브라우저의 쿠키를 삭제한다.
+    req.session.destroy(function(err,result){
+        // 지워줄 쿠키를 선택한다. / 콘솔 로그의 application → cookies에 가면 name에서 확인할 수 있다.
+        res.clearCookie("connect.sid")
+        // 로그아웃 후 다시 메인페이지로 돌아가기
+        res.redirect("/");
+    });
+});

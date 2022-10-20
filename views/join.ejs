@@ -11,27 +11,30 @@
     <div id="join_container">
         <div class="center">
             <h2>가입하기</h2>
-            <form action="" method="post">
+            <form action="/userJoin" method="post">
                 <div class="line">
                     <input type="text" name="joinname" id="joinname" placeholder="이름">
                     <span></span>
                 </div>
-                <div class="line">
+                <div class="line checkLine">
                     <input type="text" name="joinemail" id="joinemail"  placeholder="이메일주소">
                     <span></span>
                 </div>
-                <div class="line">
+                <div class="line checkLine">
                     <input type="text" name="joinid" id="joinid"  placeholder="아이디">
                     <span></span>
                 </div>
-                <div class="line">
+                <div class="line checkLine">
                     <input type="password" name="joinpass" id="joinpass"  placeholder="비밀번호">
                     <span></span>
                 </div>
-                <button type="submit">가입하기</button>
+                <button class="joinBtn" type="submit">가입하기</button>
+                <button class="cancelBtn" type="button">취소</button>
             </form>
-            <p>이미 계정이 있습니까?<a href="#">로그인하기</a></p>
+            <p>이미 계정이 있습니까?<a href="/login">로그인하기</a></p>
         </div>
     </div>
+    <script src="/js/cancel_btn.js"></script>
+    <script src="/js/formCheck.js"></script>
 </body>
 </html>

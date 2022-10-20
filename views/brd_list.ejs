@@ -1,3 +1,10 @@
+<% if(!userData){ %>
+    <script>
+        alert("비회원은 접근할수 없는 페이지 입니다.")
+        location.href = "/login";
+    </script>
+<% } %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,11 +27,11 @@
                     <h3>고객센터</h3>
                     <ul>
                        <li>
-                            <a href="#">공지사항</a>
+                            <a href="/brdlist">공지사항</a>
                             <span class="notice"></span> 
                         </li>
-                       <li>
-                            <a href="#">문의하기</a>
+                       <li class="qnaBtn">
+                            <a href="/brdinsert">문의하기</a>
                             <span class="qna"></span>
                         </li>
                     </ul>
@@ -32,27 +39,35 @@
             </div>
             <table class="brd_top">
                 <tr class="brd_top">
+                    <th class="number">번호</th>
                     <th class="title">제목</th>
                     <th class="date">등록일자</th>
+                    <th class="auther">작성자</th>
                 </tr>
                 <!-- 반복문으로 데이터 받아와서 여기에 넣어주기 -->
-                <tr class="brd_bot">
-                    <th class="title"></th>
-                    <th class="date"></th>
-                </tr>
+                <% brdinfo.forEach(function(el, index){ %>
+                    <tr class="brd_bot">
+                        <th class="number"><%- el.brdid %></th>
+                        <th class="title"><a href="/brddetail/<%- el.brdid %>"><%- el.brdtitle %></a></th>
+                        <th class="date"><%- el.brddate %></th>
+                        <th class="auther"><%- el.brdauther %></th>
+                    </tr>
+                <% }); %>
             </table>
-            <div class="search_menu">
+            <form action="/search" method="get" class="search_menu">
                 <select name="search_menu" id="search_menu">
                     <option value="brdtitle">제목</option>
                     <option value="brdcontext">내용</option>
                 </select>
                 <input type="text" name="searchInput" id="searchInput">
                 <button type="submit">검색</button>
-            </div>
+            </form>
         </div>
     </div>
 
     <!-- 풋터영역 -->
     <%- include("common/footer.ejs") %>
+    
+    <script src="js/brd_btn.js"></script>
 </body>
 </html>

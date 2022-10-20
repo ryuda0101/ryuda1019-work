@@ -1,43 +1,59 @@
 <div id="header">
+    <div class="subgnbBg"></div>
     <div class="center">
         <h1 class="logo"><a href="/"><img src="img/logo.png" alt="로고 이미지 입니다."></a></h1>
-        <ul class="gnb">
-            <li>
-                <a href="/login">회사소개</a>
-                <ul class="sub_gnb">
-                    <li><a href="#">기업소개</a></li>
-                    <li><a href="#">비전</a></li>
-                    <li><a href="#">오시는길</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="/join">사업소개</a>
-                <ul class="sub_gnb">
-                    <li><a href="#">사업영역</a></li>
-                    <li><a href="#">생산시설</a></li>
-                </ul>
-            </li>
-            <li><a href="/brddetail">제품소개</a></li>
-            <li>
-                <a href="/brdlist">고객센터</a>
-                <ul class="sub_gnb">
-                    <li><a href="#">공지사항</a></li>
-                    <li><a href="#">문의하기</a></li>
-                </ul>
-            </li>
-            <li><a href="/brdinsert">쇼핑몰</a></li>
-        </ul>
+        <div class="gnbWrap">
+            <ul class="gnb">
+                <li>
+                    <a href="#">회사소개</a>
+                    <ul class="sub_gnb">
+                        <li><a href="#">기업소개</a></li>
+                        <li><a href="#">비전</a></li>
+                        <li><a href="#">오시는길</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">사업소개</a>
+                    <ul class="sub_gnb">
+                        <li><a href="#">사업영역</a></li>
+                        <li><a href="#">생산시설</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">제품소개</a></li>
+                <li>
+                    <a href="/brdlist">고객센터</a>
+                    <ul class="sub_gnb">
+                        <li><a href="/brdlist">공지사항</a></li>
+                        <li><a href="/brdinsert">문의하기</a></li>
+                    </ul>
+                </li>
+                <li><a href="#">쇼핑몰</a></li>
+            </ul>
+        </div>
+        <div class="condition">
+            <% if(!userData){ %>
+                <a class="loginBtn" href="/login">로그인</a>
+                <span></span>
+                <a class="joinBtn" href="/join">회원가입</a>
+            <% } else { %>
+                <div class="hello">안녕하세요 <%- userData.joinnick %>님</div>
+                <a class="logout" href="/logout">로그아웃</a>
+            <% } %>
+        </div>
         <script>
             // 변수 세팅
-            const gnbMenu = document.querySelectorAll("#header .center .gnb > li");
-            const subGnbMenu = document.querySelector("#header .center .gnb .sub_gnb");
+            const gnbMenu = document.querySelector("#header .center .gnb");
+            const subGnbMenu = document.querySelectorAll("#header .center .gnb .sub_gnb");
+            const subGnbbg = document.querySelector("#header .subgnbBg");
 
-            gnbMenu.forEach(function(el,index){
-                el.addEventListener("mouseenter",function(){
-                    el.querySelector(".sub_gnb").style.height = "100px"
+            subGnbMenu.forEach(function(el,index){
+                gnbMenu.addEventListener("mouseenter",function(){
+                    el.style.height = "174px"
+                    subGnbbg.style.height = "174px"
                 });
-                el.addEventListener("mouseleave",function(){
-                    el.querySelector(".sub_gnb").style.height = "0"
+                gnbMenu.addEventListener("mouseleave",function(){
+                    el.style.height = "0"
+                    subGnbbg.style.height = "0"
                 });
             });
         </script>

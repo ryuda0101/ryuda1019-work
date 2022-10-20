@@ -1,3 +1,10 @@
+<% if(!userData){ %>
+    <script>
+        alert("비회원은 접근할 수 없습니다.")
+        location.href = "/login";
+    </script>
+<% } %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객센터</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
     <!-- 헤더영역 -->
@@ -20,11 +27,11 @@
                     <h3>고객센터</h3>
                     <ul>
                        <li>
-                            <a href="#">공지사항</a>
+                            <a href="/brdlist">공지사항</a>
                             <span class="notice"></span> 
                         </li>
-                       <li>
-                            <a href="#">문의하기</a>
+                       <li class="qnaBtn">
+                            <a href="/brdinsert">문의하기</a>
                             <span class="qna"></span>
                         </li>
                     </ul>
@@ -34,24 +41,32 @@
                 <h2>공지사항</h2>
             </div>
             <table class="brd_detail">
-                <!-- 반복문으로 데이터 받아와서 여기에 넣어주기 -->
+                <!-- db에서 데이터 받아와서 여기에 넣어주기 -->
                 <tr class="brd_line top_line">
                     <th class="title left_th">제목</th>
-                    <th class="title right_th"></th>
+                    <th class="title right_th"><%- brdinfo.brdtitle %></th>
                 </tr>
                 <tr class="brd_line">
                     <th class="date left_th">작성일자</th>
-                    <th class="date right_th"></th>
+                    <th class="date right_th"><%- brdinfo.brddate %></th>
                 </tr>
                 <tr class="brd_context">
-                    <th class="context"></th>
+                    <th class="context"><%- brdinfo.brdcontext %></th>
                 </tr>
             </table>
-            <a class="listBtn" href="/brdlist">목록보기</a>
+            <div class="detail_btns">
+                <a class="listBtn" href="/brdlist">목록보기</a>
+                <% if(userData.joinnick === brdinfo.brdauther) { %>
+                    <a href="/brdedit/<%- brdinfo.brdid %>">수정</a>
+                    <a class="deleteBtn" href="/delete/<%- brdinfo.brdid %>">삭제</a>
+                <% } %>
+            </div>
         </div>
     </div>
 
     <!-- 풋터영역 -->
     <%- include("common/footer.ejs") %>
+    
+    <script src="js/brd_btn.js"></script>
 </body>
 </html>

@@ -11,13 +11,16 @@
     <div id="login_container">
         <div class="center">
             <h2>LOGIN</h2>
-            <form action="" method="post">
+            <form action="/loginresult" method="post">
                 <input type="text" name="userid" id="userid" placeholder="아이디">
                 <input type="password" name="userpass" id="userpass"  placeholder="비밀번호">
                 <button class="loginBtn" type="submit">LOGIN</button>
-                <button class="joinBtn" type="submit">회원가입</button>
+                <button class="joinBtn" type="button">회원가입</button>
+                <button class="cancelBtn" type="button">취소</button>
             </form>
         </div>
     </div>
+    <script src="/js/join_btn.js"></script>
+    <script src="/js/cancel_btn.js"></script>
 </body>
 </html>

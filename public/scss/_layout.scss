@@ -25,6 +25,9 @@ button {cursor:pointer;}
     .center {
         display:flex; justify-content:space-between;
         position:relative;
+        .logo {
+            margin:auto 0;
+        }
         .gnbWrap {
             width:58.333333%;
             .gnb {

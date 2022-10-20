@@ -13,6 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>고객센터</title>
     <link rel="stylesheet" href="css/style.css">
+    <!-- 폰트 관련 링크 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- 헤더영역 -->
@@ -54,13 +58,14 @@
                     </tr>
                 <% }); %>
             </table>
+            <!-- 검색 메뉴 -->
             <form action="/search" method="get" class="search_menu">
                 <select name="search_menu" id="search_menu">
                     <option value="brdtitle">제목</option>
                     <option value="brdcontext">내용</option>
                 </select>
                 <input type="text" name="searchInput" id="searchInput">
-                <button type="submit">검색</button>
+                <button class="search_btn" type="submit">검색</button>
             </form>
         </div>
     </div>
@@ -69,5 +74,6 @@
     <%- include("common/footer.ejs") %>
     
     <script src="/js/brd_btn.js"></script>
+    <script src="/js/search.js"></script>
 </body>
 </html>

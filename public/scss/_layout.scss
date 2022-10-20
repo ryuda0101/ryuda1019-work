@@ -194,12 +194,13 @@ button {cursor:pointer;}
                         margin:0 30px;
                         a {
                             text-align:center; display:block;
+                            font-size:18px;
                         }
                         span {
                             display:block;
                             width:63px; height:2px;
                             background-color: #000;
-                            position:relative; top:56px;
+                            position:relative; top:53px;
                             transition:all 0.5s;
                         }
                         .qna {opacity:0;}
@@ -211,6 +212,9 @@ button {cursor:pointer;}
             margin:240px 0 120px 0; width:100%;
             tr {
                 line-height:70px;
+                th {
+                    font-weight:normal;
+                }
             }
             .brd_top {
                 border-top:2px solid #000;

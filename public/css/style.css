@@ -1,7 +1,8 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: Arial;
+  font-family: "Noto Sans", sans-serif;
+  font-family: "Noto Sans KR", sans-serif;
 }
 
 ul, ol, li {
@@ -305,6 +306,7 @@ button {
 #brd_list_container .center .top_menu .custom_center ul li a {
   text-align: center;
   display: block;
+  font-size: 18px;
 }
 #brd_list_container .center .top_menu .custom_center ul li span {
   display: block;
@@ -312,7 +314,7 @@ button {
   height: 2px;
   background-color: #000;
   position: relative;
-  top: 56px;
+  top: 53px;
   transition: all 0.5s;
 }
 #brd_list_container .center .top_menu .custom_center ul li .qna {
@@ -324,6 +326,9 @@ button {
 }
 #brd_list_container .center table tr {
   line-height: 70px;
+}
+#brd_list_container .center table tr th {
+  font-weight: normal;
 }
 #brd_list_container .center table .brd_top {
   border-top: 2px solid #000;

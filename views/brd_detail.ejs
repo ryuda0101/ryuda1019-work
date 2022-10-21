@@ -58,11 +58,44 @@
                     <th class="context"><%- brdinfo.brdcontext %></th>
                 </tr>
             </table>
+            <!-- 해당 게시글 페이지 내에서 댓글 입력하는 구간 -->
+            <div class="comment">
+                <form id="comment_form" action="/addcomment" method="post">
+                    <!-- 댓글 입력시 해당 게시글의 번호값도 같이 전송 -->
+                    <!-- 댓글은 어떤 게시글 안에 소속될 것인지 표시하기 위해서 -->
+                    <input type="hidden" value="<%- brdinfo.brdid %>" name="prdid">
+                    <textarea  id="comment_text" name="comment_text"></textarea>
+                    <button type="submit">댓글 등록</button>
+                </form>
+            </div>
+            <!-- 댓글 출력 구간 -->
+            <% for(let i = 0; i < commentData.length; i++){ %>
+            <div class="comment_box">
+                <div class="comment_context"><%- commentData[i].comContext %></div>
+                <div class="comment_date"><%- commentData[i].comAuther %></div>
+                <div class="comment_auther"><%- commentData[i].comDate %></div>
+                <!-- 조건문으로  -->
+                <% if(userData.joinnick === commentData[i].comAuther) { %>
+                    <div class="comment_btn">
+                        <a class="update_comment" href="#">댓글 수정</a>
+                        <a class="del_comment" href="/deletecomment/<%- commentData[i].comNo %>">댓글 삭제</a>
+                    </div>
+                    <form class="comupdate_form" action="/updatecomment" method="post">
+                        <!-- 내가 수정할 댓글의 순번값을 받아오기 위한 type="hidden"의 input 태그 -->
+                        <input type="hidden" name="comNo" value="<%- commentData[i].comNo %>">
+                        <textarea name="comContext" class="comContext"><%- commentData[i].comContext %></textarea>    
+                        <button class="comment_ok" type="submit">작성 완료</button>
+                        <button class="comment_no" type="button">작성 취소</button>
+                    </form>
+                <% } %>
+            </div>
+            <% } %>
+            <!-- 수정, 삭제, 목록 버튼들 -->
             <div class="detail_btns">
                 <a class="listBtn" href="/brdlist">목록보기</a>
                 <% if(userData.joinnick === brdinfo.brdauther) { %>
                     <a href="/brdedit/<%- brdinfo.brdid %>">수정</a>
-                    <a class="deleteBtn" href="/delete/<%- brdinfo.brdid %>">삭제</a>
+                    <a href="/delete/<%- brdinfo.brdid %>" class="deleteBtn">삭제</a>
                 <% } %>
             </div>
         </div>
@@ -72,5 +105,6 @@
     <%- include("common/footer.ejs") %>
     
     <script src="/js/brd_btn.js"></script>
+    <script src="/js/comment.js"></script>
 </body>
 </html>

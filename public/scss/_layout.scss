@@ -281,13 +281,58 @@ button {cursor:pointer;}
             }
             .top_line {border-top:1px solid #000;}
         }
+        .comment {
+            border-bottom:1px solid #e2e2e2; padding:50px 0;
+            #comment_form {
+                textarea {
+                    width:100%; height:100px;
+                    border:1px solid #000;
+                }
+                button {
+                    display:inline-block; width:80px; height:40px;
+                    background-color:#adb5bd; border-radius:3px;
+                    color:#fff; text-align:center; line-height:40px;
+                    margin-top:10px;
+                }
+            }
+        }
+        .comment_box {
+            padding:50px 0;
+            .comment_context {white-space:pre;}
+            .comment_date,.comment_auther {text-align:right;}
+            .comment_btn {
+                display:flex;
+                a {                    
+                    display:inline-block; width:80px; height:40px;
+                    background-color:#adb5bd; border-radius:3px;
+                    color:#fff; text-align:center; line-height:40px;
+                    margin-right:5px;
+                }
+            }
+            .comupdate_form {
+                display:none;
+                margin-top:50px;
+                textarea {
+                    width:100%; height:100px;
+                    border:1px solid #000;
+                }
+                button {
+                    display:inline-block; width:80px; height:40px;
+                    background-color:#adb5bd; border-radius:3px;
+                    color:#fff; text-align:center; line-height:40px;
+                    margin-top:10px; margin-right:5px;
+                }
+            }
+        }
+
+
         .detail_btns {
-            display:flex; margin-bottom:240px;
+            margin-bottom:240px;
             a {
-                display:block; width:80px; height:40px;
+                display:inline-block; width:80px; height:40px;
                 background-color:#adb5bd; border-radius:3px;
                 color:#fff; text-align:center; line-height:40px;
-                margin:0 5px;
+                margin-right:5px;
             }
         }
     }
